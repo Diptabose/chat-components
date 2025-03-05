@@ -1,5 +1,5 @@
 "use client";
-import React, { HTMLAttributes, ReactNode, useState } from "react";
+import React, { HTMLAttributes, ReactNode, RefObject, useState } from "react";
 import { IoMdSend } from "react-icons/io";
 import TextareaAutosize, {
   TextareaAutosizeProps,
@@ -7,7 +7,9 @@ import TextareaAutosize, {
 import { cn } from "@/core/utils/cn";
 import { Message } from "@/core/types/ChatTypes";
 
-interface BaseChatInputProps<T> extends TextareaAutosizeProps {}
+interface BaseChatInputProps<T> extends TextareaAutosizeProps {
+  ref: RefObject<HTMLTextAreaElement | null>;
+}
 
 const BaseChatInput = (props: BaseChatInputProps<HTMLTextAreaElement>) => {
   return <TextareaAutosize {...props} />;

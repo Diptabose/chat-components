@@ -1,16 +1,18 @@
 "use client";
 import { ChatInput } from "@/core/components/input/BaseInput";
-import MarkdownMessage from "@/core/components/message/TestMarkdown";
+import MarkdownMessage from "@/core/components/message/MarkdownMessage";
 import ChatWindow from "@/core/components/window/ChatWindow";
 import useChat, { useChatUtils } from "@/core/hooks/chat/useChat";
+import useChatInput from "@/core/hooks/chat/useChatInput";
 import useChatScroll from "@/core/hooks/chat/useChatScroll";
-import { useRef } from "react";
+import useChatWindow from "@/core/hooks/chat/useChatWindow";
 
 export default function Home() {
   const { conversation } = useChat();
   const { addMessage, getServerResponse, abortChat } = useChatUtils();
 
-  const scrollableRef = useRef<HTMLDivElement>(null);
+  const scrollableRef = useChatWindow();
+  const inputRef = useChatInput();
 
   const { scrollBottom } = useChatScroll(
     scrollableRef,
@@ -19,46 +21,18 @@ export default function Home() {
     },
     [conversation]
   );
-  const sampleMarkdown = `
-  # Markdown with Code, Math, and More!  
-  ## Code Example:
-  \`\`\`js
-  const greet = () => console.log("Hello, world!");
-  greet();
-  \`\`\`
-  
-  ## Table Example:
-  | Name  | Age |
-  |-------|-----|
-  | Alice | 25  |
-  | Bob   | 30  |
-  
-  ## Math Example:
-  Inline math: $E = mc^2$  
-  Block math:
-  $$
-  \\int_0^\\infty e^{-x}dx = 1
-  $$
-  
-  ## Image Example:
-  ![Markdown Logo](https://upload.wikimedia.org/wikipedia/commons/4/48/Markdown-mark.svg)
-  
-  ## Link Example:
-  [Visit OpenAI](https://openai.com)
-  `;
-  
-  
-  
+
   return (
     <div className="flex flex-col h-svh gap-2">
       <ChatWindow
         scrollableRef={scrollableRef}
         currentConversation={conversation}
-        placement="extreme"
+        placement="sequential"
       />
 
       <div className="w-1/2 self-center p-2">
         <ChatInput
+          ref={inputRef}
           placeholder="Type a message"
           onHeightChange={scrollBottom}
           onSend={async (message) => {
@@ -67,8 +41,6 @@ export default function Home() {
           }}
         />
       </div>
-
-      
     </div>
   );
 }

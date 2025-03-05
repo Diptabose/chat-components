@@ -1,9 +1,8 @@
 import React, { RefObject, ReactElement, useCallback } from "react";
-import { ChatMessage } from "../message/BaseMessage";
+import { ChatMessage } from "../message/ChatMessage";
 import { Message } from "@/core/types/ChatTypes";
 import { message_aligment } from "./chat-message-alignment";
 import { cn } from "@/core/utils/cn";
-import MarkdownMessage from "../message/TestMarkdown";
 
 interface ChatWindowProps<T extends Message> {
   scrollableRef: RefObject<HTMLDivElement | null>;
@@ -32,7 +31,6 @@ const defaultMessageRenderer = <T extends Message>(
   >
     {message.text}
   </ChatMessage>
-  
 );
 
 const ChatWindow = <T extends Message>({

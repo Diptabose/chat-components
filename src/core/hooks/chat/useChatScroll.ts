@@ -1,29 +1,37 @@
-import { RefObject, useEffect } from 'react'
-
+import { RefObject, useEffect } from "react";
 
 interface ChatScrollConfig {
-    autoScroll: boolean
+  autoScroll: boolean;
 }
 
-
-const useChatScroll = <T extends HTMLElement>(ref: RefObject<T | null>, config: ChatScrollConfig, deps: unknown[]) => {
-
-    const scrollBottom = () => {
-        if (config.autoScroll) {
-            ref?.current?.scrollTo({
-                top: ref?.current?.scrollHeight,
-                behavior: "smooth",
-            });
-        }
+const useChatScroll = <T extends HTMLElement>(
+  ref: RefObject<T | null>,
+  config: ChatScrollConfig,
+  deps: unknown[]
+) => {
+  const scrollBottom = () => {
+    if (config.autoScroll) {
+      ref?.current?.scrollTo({
+        top: ref?.current?.scrollHeight,
+        behavior: "smooth",
+      });
     }
+  };
 
-    useEffect(() => {
-        scrollBottom();
-    }, deps)
+  useEffect(() => {
+    // Differ the scrollAction until rendering is complete
+    const timerId = setTimeout(() => {
+      scrollBottom();
+    }, 0);
 
-    return {
-        scrollBottom
-    }
-}
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, deps);
 
-export default useChatScroll
+  return {
+    scrollBottom,
+  };
+};
+
+export default useChatScroll;

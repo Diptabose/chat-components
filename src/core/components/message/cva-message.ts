@@ -4,15 +4,12 @@ export const message = cva(
   [
     "flex",
     "items-center",
-    "gap-2",
+    "gap-4",
     "p-2",
-    "cursor-pointer",
     "border",
     "border-slate-300",
     "shadow-md",
     "rounded-md",
-    "w-fit",
-    "max-w-3/4",
   ],
   {
     variants: {
