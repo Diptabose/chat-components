@@ -60,7 +60,7 @@ export const ChatMessage = ({
         ) : (
           <BaseMessage {...otherProps} />
         )}
-        <div className="">
+        {/* <div className="">
           <div className="flex gap-2 items-center">
             <div className="flex gap-2 items-center rounded-2xl p-2 border border-slate-300">
               <div className="flex rounded-lg size-10 shrink-0 bg-rose-400 p-1 text-center">
@@ -74,7 +74,7 @@ export const ChatMessage = ({
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

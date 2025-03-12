@@ -62,3 +62,8 @@ body {
   border-radius: 5px;
   overflow-x: auto;
 }
+
+.katex .katex-mathml{
+  position:relative;
+  display: none;
+}

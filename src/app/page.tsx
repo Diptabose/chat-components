@@ -1,4 +1,6 @@
 "use client";
+import ChatBody from "@/core/components/chat/body/ChatBody";
+import ChatHeader from "@/core/components/chat/header/ChatHeader";
 import { ChatInput } from "@/core/components/input/BaseInput";
 import MarkdownMessage from "@/core/components/message/MarkdownMessage";
 import ChatWindow from "@/core/components/window/ChatWindow";
@@ -23,8 +25,28 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-col h-svh gap-2">
-      <ChatWindow
+    <div className="flex flex-col h-svh overflow-auto gap-2">
+      <ChatHeader>
+        <div>Hello world</div>
+      </ChatHeader>
+      <ChatBody>
+        <ChatWindow
+          scrollableRef={scrollableRef}
+          currentConversation={conversation}
+          placement="sequential"
+        />
+        <ChatInput
+          ref={inputRef}
+          placeholder="Type a message"
+          onHeightChange={scrollBottom}
+          onSend={async (message) => {
+            addMessage(message);
+            await getServerResponse();
+          }}
+        />
+      </ChatBody>
+
+      {/* <ChatWindow
         scrollableRef={scrollableRef}
         currentConversation={conversation}
         placement="sequential"
@@ -40,7 +62,7 @@ export default function Home() {
             await getServerResponse();
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

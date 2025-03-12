@@ -49,10 +49,10 @@ const ChatWindow = <T extends Message>({
 
   return (
     <div
-      className="flex flex-col overflow-y-auto flex-1 p-2"
+      className="flex flex-col overflow-y-auto h-full flex-1 p-2"
       ref={scrollableRef}
     >
-      <div className="flex flex-col gap-2 w-1/2 self-center">
+      <div className="flex flex-col gap-2">
         {currentConversation.map(renderMessage)}
       </div>
     </div>
