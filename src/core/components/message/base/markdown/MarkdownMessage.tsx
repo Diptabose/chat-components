@@ -32,14 +32,14 @@ const MarkdownMessage = ({ content }: MarkdownMesssageProps) => {
           const codeText = String(children).replace(/\n$/, "");
           const codeId = `${className}-${codeText.length}`; // Unique ID
           return !inline && match ? (
-            <div className="code-block">
+            <div className="max-w-[95%] relative">
               <button
                 className="copy-btn"
                 onClick={() => copyToClipboard(codeText, codeId)}
               >
                 {copied === codeId ? "✅ Copied!" : "📋 Copy"}
               </button>
-              <pre className="hljs">
+              <pre className="hljs grid">
                 <code className={className} {...props}>
                   {children}
                 </code>

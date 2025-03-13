@@ -33,10 +33,6 @@ body {
   word-wrap: break-word;
 }
 
-.code-block {
-  position: relative;
-  margin: 10px 0;
-}
 
 .copy-btn {
   position: absolute;

@@ -19,6 +19,7 @@ export default BaseChatInput;
 
 interface ChatInputProps extends BaseChatInputProps<HTMLTextAreaElement> {
   wrapperProps?: HTMLAttributes<HTMLDivElement>;
+  rootProps?: HTMLAttributes<HTMLDivElement>;
   textAreaWrapperProps?: HTMLAttributes<HTMLDivElement>;
   sendIcon?: ReactNode;
   extensions?: ReactNode[];
@@ -26,6 +27,7 @@ interface ChatInputProps extends BaseChatInputProps<HTMLTextAreaElement> {
 }
 
 export const ChatInput = ({
+  rootProps,
   textAreaWrapperProps,
   sendIcon,
   extensions,
@@ -44,8 +46,10 @@ export const ChatInput = ({
 
   return (
     <div
+      {...rootProps}
       className={cn(
-        "p-2 flex flex-col gap-2 rounded-lg shadow-md border border-slate-300"
+        "p-2 flex flex-col gap-2 rounded-lg shadow-md border border-slate-300",
+        rootProps?.className
       )}
     >
       <div

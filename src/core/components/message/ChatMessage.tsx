@@ -1,11 +1,10 @@
 import { cn } from "@/core/utils/cn";
 import { ReactNode, HTMLAttributes, RefObject } from "react";
 import { FaUser } from "react-icons/fa";
-import { FaRegFileAlt } from "react-icons/fa";
 import { HiSparkles } from "react-icons/hi";
-import BaseMessage, { BaseMessageProps } from "./BaseMessage";
-import { message } from "./cva-message";
-import MarkdownMessage from "./MarkdownMessage";
+import BaseMessage, { BaseMessageProps } from "./base/BaseMessage";
+import { message } from "./base/cva-message";
+import MarkdownMessage from "./base/markdown/MarkdownMessage";
 
 export interface ChatMessageProps extends BaseMessageProps {
   type: MessageType;

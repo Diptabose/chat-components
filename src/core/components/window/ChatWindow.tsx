@@ -1,8 +1,10 @@
-import React, { RefObject, ReactElement, useCallback } from "react";
+import React, { RefObject, ReactElement } from "react";
 import { ChatMessage } from "../message/ChatMessage";
 import { Message } from "@/core/types/ChatTypes";
 import { message_aligment } from "./chat-message-alignment";
 import { cn } from "@/core/utils/cn";
+import UserMessage from "../message/user/UserMessage";
+import MessageFooter from "../message/user/UserMessageFooter";
 
 interface ChatWindowProps<T extends Message> {
   scrollableRef: RefObject<HTMLDivElement | null>;
@@ -39,21 +41,23 @@ const ChatWindow = <T extends Message>({
   placement = "sequential",
   messageComponent,
 }: ChatWindowProps<T>) => {
-  const renderMessage = useCallback(
-    (message: T, index: number) =>
-      messageComponent
-        ? messageComponent(message, index)
-        : defaultMessageRenderer({ ...message, placement } as T, index),
-    [messageComponent, placement]
-  );
-
   return (
     <div
-      className="flex flex-col overflow-y-auto h-full flex-1 p-2"
+      className="flex flex-col overflow-y-auto h-full flex-1 py-2"
       ref={scrollableRef}
     >
-      <div className="flex flex-col gap-2">
-        {currentConversation.map(renderMessage)}
+      <div className="w-[50%] mx-auto">
+        <div className="flex flex-col gap-2">
+          {currentConversation.map((message, value) => {
+            return (
+              <UserMessage
+                key={value}
+                text={message.text}
+                footer={<MessageFooter />}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
