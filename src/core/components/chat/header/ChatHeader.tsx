@@ -1,7 +1,9 @@
-import React, { PropsWithChildren } from "react";
+import React, { HTMLAttributes } from "react";
 
-const ChatHeader = (props: PropsWithChildren) => {
-  return <div>{props.children}</div>;
+interface ChatHeaderProps extends HTMLAttributes<HTMLDivElement> {}
+
+const ChatHeader = ({ children, ...props }: ChatHeaderProps) => {
+  return <div {...props}>{children}</div>;
 };
 
 export default ChatHeader;

@@ -18,7 +18,6 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
 
     navigator.clipboard.writeText(value).then(() => {
       setIsCopied(true);
-
       setTimeout(() => {
         setIsCopied(false);
       }, 2000);
@@ -44,7 +43,7 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
       <SyntaxHighlighter
         language={language}
         style={oneDark}
-        customStyle={{ margin: 0, borderRadius:"0px" }}
+        customStyle={{ margin: 0, borderRadius: "0px" }}
       >
         {value}
       </SyntaxHighlighter>

@@ -1,5 +1,6 @@
 "use client";
 import ChatBody from "@/core/components/chat/body/ChatBody";
+import ChatFooter from "@/core/components/chat/footer/ChatFooter";
 import ChatHeader from "@/core/components/chat/header/ChatHeader";
 import { ChatInput } from "@/core/components/input/BaseInput";
 import MarkdownMessage from "@/core/components/message/base/markdown/MarkdownMessage";
@@ -48,6 +49,9 @@ export default function Home() {
             await getServerResponse();
           }}
         />
+        <ChatFooter>
+          <div>Hello this is footer</div>
+        </ChatFooter>
       </ChatBody>
     </div>
   );
