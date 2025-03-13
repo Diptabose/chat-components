@@ -3,9 +3,10 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import rehypeHighlight from "rehype-highlight";
 import "katex/dist/katex.min.css";
-import "highlight.js/styles/github-dark.css";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { CodeBlock } from "./Codeblock";
 
 export interface MarkdownMesssageProps {
   content: string;
@@ -23,28 +24,14 @@ const MarkdownMessage = ({ content }: MarkdownMesssageProps) => {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath]}
-      rehypePlugins={[rehypeKatex, rehypeHighlight]}
+      rehypePlugins={[rehypeKatex]}
       components={{
         //@ts-expect-error
         code({ className, children, inline, ...props }) {
           const match = /language-(\w+)/.exec(className || "");
-          //const codeText = String(children).trim();
           const codeText = String(children).replace(/\n$/, "");
-          const codeId = `${className}-${codeText.length}`; // Unique ID
           return !inline && match ? (
-            <div className="max-w-[95%] relative">
-              <button
-                className="copy-btn"
-                onClick={() => copyToClipboard(codeText, codeId)}
-              >
-                {copied === codeId ? "✅ Copied!" : "📋 Copy"}
-              </button>
-              <pre className="hljs grid">
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              </pre>
-            </div>
+            <CodeBlock language={(match && match[1]) || ""} value={codeText} />
           ) : (
             <code className={className} {...props}>
               {children}
