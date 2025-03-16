@@ -5,6 +5,7 @@ import UserMessage from "../message/user/UserMessage";
 import MessageFooter from "../message/user/UserMessageFooter";
 import { ChatMessage } from "@/core/types/message";
 import AssitantMessage from "../message/assistant/AssitantMessage";
+import AssistantMessageFooter from "../message/assistant/AssistantMessageFooter";
 
 interface ChatWindowProps<T extends ChatMessage> {
   scrollableRef: RefObject<HTMLDivElement | null>;
@@ -30,7 +31,9 @@ const ChatWindow = <T extends ChatMessage>({
             return message?.type === "assistant" ? (
               <AssitantMessage
                 {...message}
-                footer={<MessageFooter message={message} postion={index} />}
+                footer={
+                  <AssistantMessageFooter message={message} postion={index} />
+                }
                 key={index}
               />
             ) : (

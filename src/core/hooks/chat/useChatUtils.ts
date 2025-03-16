@@ -54,6 +54,7 @@ export const useChatUtils = () => {
     }
 
     updateLastMessage({ text: "", loading: true });
+    await new Promise((res, rej) => setTimeout(res, 5000));
 
     try {
       const serverResp = await axios.post(
@@ -70,7 +71,7 @@ export const useChatUtils = () => {
           signal: abortController.current.signal,
         }
       );
-
+      updateLastMessage({ loading: false });
       const reader = serverResp.data;
       const transformStream = toDecodedReadableStream(reader).pipeThrough(
         transformSSEStream()
