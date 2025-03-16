@@ -1,7 +1,7 @@
-import { Message } from "../types/ChatTypes"
+import { ChatMessage } from "../types/message"
 
 export type ChatStateType = {
-  conversation: Message[]
+  conversation: ChatMessage[]
 }
 
 export const ChatInitialState: ChatStateType = {

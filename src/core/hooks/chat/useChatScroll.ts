@@ -19,11 +19,9 @@ const useChatScroll = <T extends HTMLElement>(
   };
 
   useEffect(() => {
-    // Differ the scrollAction until rendering is complete
     const timerId = setTimeout(() => {
       scrollBottom();
     }, 0);
-
     return () => {
       clearTimeout(timerId);
     };

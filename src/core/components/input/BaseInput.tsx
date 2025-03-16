@@ -6,6 +6,7 @@ import TextareaAutosize, {
 } from "react-textarea-autosize";
 import { cn } from "@/core/utils/cn";
 import { Message } from "@/core/types/ChatTypes";
+import { ChatMessage } from "@/core/types/message";
 
 interface BaseChatInputProps<T> extends TextareaAutosizeProps {
   ref: RefObject<HTMLTextAreaElement | null>;
@@ -23,7 +24,7 @@ interface ChatInputProps extends BaseChatInputProps<HTMLTextAreaElement> {
   textAreaWrapperProps?: HTMLAttributes<HTMLDivElement>;
   sendIcon?: ReactNode;
   extensions?: ReactNode[];
-  onSend?: (message: Message) => void;
+  onSend?: (message: ChatMessage) => void;
 }
 
 export const ChatInput = ({

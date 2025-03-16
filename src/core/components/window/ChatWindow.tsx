@@ -1,41 +1,19 @@
 import React, { RefObject, ReactElement } from "react";
-import { ChatMessage } from "../message/ChatMessage";
-import { Message } from "@/core/types/ChatTypes";
 import { message_aligment } from "./chat-message-alignment";
 import { cn } from "@/core/utils/cn";
 import UserMessage from "../message/user/UserMessage";
 import MessageFooter from "../message/user/UserMessageFooter";
+import { ChatMessage } from "@/core/types/message";
+import AssitantMessage from "../message/assistant/AssitantMessage";
 
-interface ChatWindowProps<T extends Message> {
+interface ChatWindowProps<T extends ChatMessage> {
   scrollableRef: RefObject<HTMLDivElement | null>;
   currentConversation: T[];
   placement?: "sequential" | "extreme";
   messageComponent?: (message: T, index: number) => ReactElement;
 }
 
-// Default message renderer for ChatMessage
-const defaultMessageRenderer = <T extends Message>(
-  message: T,
-  index: number
-) => (
-  <ChatMessage
-    key={index}
-    type={message.type}
-    format="markdown"
-    wrapperProps={{
-      className: cn(
-        message_aligment({
-          align: message.placement,
-          type: message.type,
-        })
-      ),
-    }}
-  >
-    {message.text}
-  </ChatMessage>
-);
-
-const ChatWindow = <T extends Message>({
+const ChatWindow = <T extends ChatMessage>({
   scrollableRef,
   currentConversation,
   placement = "sequential",
@@ -48,12 +26,18 @@ const ChatWindow = <T extends Message>({
     >
       <div className="w-[50%] mx-auto">
         <div className="flex flex-col gap-2">
-          {currentConversation.map((message, value) => {
-            return (
+          {currentConversation.map((message, index) => {
+            return message?.type === "assistant" ? (
+              <AssitantMessage
+                {...message}
+                footer={<MessageFooter message={message} postion={index} />}
+                key={index}
+              />
+            ) : (
               <UserMessage
-                key={value}
-                text={message.text}
-                footer={<MessageFooter />}
+                {...message}
+                footer={<MessageFooter message={message} postion={index} />}
+                key={index}
               />
             );
           })}
