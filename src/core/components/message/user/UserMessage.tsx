@@ -2,10 +2,7 @@ import MarkdownMessage from "../base/markdown/MarkdownMessage";
 import { FaUser } from "react-icons/fa";
 import { type UserMessage } from "@/core/types/message";
 import Attachment from "../attachments/Attachment";
-import BaseChatInput from "../../input/BaseInput";
-import useChatMessages from "@/core/hooks/chat/useChatMessages";
 import UserMessageEdit from "./edit/UserMessageEdit";
-import { message } from "../base/cva-message";
 
 const UserMessage = ({
   text,
@@ -15,8 +12,6 @@ const UserMessage = ({
   edit,
   position,
 }: UserMessage) => {
-  const { updateMessageAt } = useChatMessages();
-
   return (
     <div className="flex gap-4 p-2 items-center shadow-md rounded-3xl bg-[hsla(0,0%,91%,0.5)] group/message">
       <div className="shrink-0 size-8 rounded-full bg-slate-300 flex items-center justify-center self-end">
