@@ -86,12 +86,31 @@ const useChatMessages = () => {
     });
   }, []);
 
+  const updateMessageAt = useCallback(
+    <T extends ChatMessage>(message: Partial<T>, at: number) => {
+      dispatch({
+        field: "conversation",
+        value: (prev) => {
+          // Append to the last message
+          const updatedMessages = [...prev];
+          updatedMessages[at] = {
+            ...updatedMessages[at],
+            ...message,
+          };
+          return updatedMessages;
+        },
+      });
+    },
+    []
+  );
+
   return {
     addMessage,
     appendStreamChunk,
     thinking,
     getLastMessage,
     updateLastMessage,
+    updateMessageAt,
     getMessageByIndex,
   };
 };

@@ -27,6 +27,7 @@ const MessageRenderer = ({ message, position }: MessageRendererProps) => {
   return (
     <MessageComponent
       {...message}
+      position={position}
       key={position}
       footer={
         FooterComponent ? (

@@ -1,7 +1,6 @@
 import useChatMessages from "@/core/hooks/chat/useChatMessages";
 import { TbCopy, TbPencilUp } from "react-icons/tb";
-import UserMessage from "./UserMessage";
-import { useChatUtils } from "@/core/hooks/chat/useChatUtils";
+import { type UserMessage } from "@/core/types/message";
 
 interface MessageFooterProps {
   message: UserMessage;
@@ -9,6 +8,8 @@ interface MessageFooterProps {
 }
 
 const UserMessageFooter = ({ message, position }: MessageFooterProps) => {
+  const { updateMessageAt } = useChatMessages();
+
   return (
     <div className="flex items-center gap-2">
       <button className="rounded-lg hover:bg-gray-50 cursor-pointer text-[#5d5d5d]">
@@ -18,7 +19,12 @@ const UserMessageFooter = ({ message, position }: MessageFooterProps) => {
       </button>
       <button className="rounded-lg hover:bg-gray-50 cursor-pointer text-[#5d5d5d]">
         <span className="flex items-center justify-center size-8">
-          <TbPencilUp className="size-6" />
+          <TbPencilUp
+            className="size-6"
+            onClick={() => {
+              updateMessageAt<UserMessage>({ edit: true }, position);
+            }}
+          />
         </span>
       </button>
     </div>

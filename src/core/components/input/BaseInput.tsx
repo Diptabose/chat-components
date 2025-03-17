@@ -5,11 +5,10 @@ import TextareaAutosize, {
   TextareaAutosizeProps,
 } from "react-textarea-autosize";
 import { cn } from "@/core/utils/cn";
-import { Message } from "@/core/types/ChatTypes";
 import { ChatMessage } from "@/core/types/message";
 
 interface BaseChatInputProps<T> extends TextareaAutosizeProps {
-  ref: RefObject<HTMLTextAreaElement | null>;
+  ref?: RefObject<HTMLTextAreaElement | null>;
 }
 
 const BaseChatInput = (props: BaseChatInputProps<HTMLTextAreaElement>) => {

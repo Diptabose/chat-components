@@ -15,9 +15,11 @@ export type ChatMessage = {
   footer?: ReactNode;
   loading?: boolean;
   type: MessageType;
+  readonly position?: number; // Typically this should be a unique id
 };
 
 export interface UserMessage extends ChatMessage {
+  edit?: boolean;
   onResend?: () => void;
   onEdit?: (text: string) => void;
 }
