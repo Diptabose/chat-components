@@ -17,9 +17,8 @@ const UserMessage = ({
       <div className="shrink-0 size-8 rounded-full bg-slate-300 flex items-center justify-center self-end">
         {icon ?? <FaUser size={16} />}
       </div>
-
       {edit ? (
-        (<UserMessageEdit  position={position!}   />)
+        <UserMessageEdit position={position!} />
       ) : (
         <div
           className="flex flex-col gap-2 w-full"
