@@ -4,14 +4,16 @@ import { TbCopy, TbRefresh, TbPencilUp } from "react-icons/tb";
 import { useChatUtils } from "@/core/hooks/chat/useChatUtils";
 import { ChatMessage } from "@/core/types/message";
 
-
 interface AssistantMessageFooterProps {
-  message: ChatMessage,
-  postion:number
+  message: ChatMessage;
+  position: number;
 }
 
-const AssistantMessageFooter = ({message, postion}:AssistantMessageFooterProps) => {
-  const { thinking, getLastMessage } = useChatMessages();
+const AssistantMessageFooter = ({
+  message,
+  position,
+}: AssistantMessageFooterProps) => {
+  const { getLastMessage } = useChatMessages();
   const { regenerateAssistantStream } = useChatUtils();
 
   return (

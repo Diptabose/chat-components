@@ -6,6 +6,7 @@ import MessageFooter from "../message/user/UserMessageFooter";
 import { ChatMessage } from "@/core/types/message";
 import AssitantMessage from "../message/assistant/AssitantMessage";
 import AssistantMessageFooter from "../message/assistant/AssistantMessageFooter";
+import MessageRenderer from "../message/renderer/MessageRenderer";
 
 interface ChatWindowProps<T extends ChatMessage> {
   scrollableRef: RefObject<HTMLDivElement | null>;
@@ -28,20 +29,8 @@ const ChatWindow = <T extends ChatMessage>({
       <div className="w-[50%] mx-auto">
         <div className="flex flex-col gap-2">
           {currentConversation.map((message, index) => {
-            return message?.type === "assistant" ? (
-              <AssitantMessage
-                {...message}
-                footer={
-                  <AssistantMessageFooter message={message} postion={index} />
-                }
-                key={index}
-              />
-            ) : (
-              <UserMessage
-                {...message}
-                footer={<MessageFooter message={message} postion={index} />}
-                key={index}
-              />
+            return (
+              <MessageRenderer message={message} position={index} key={index} />
             );
           })}
         </div>
