@@ -1,5 +1,4 @@
 import ChatContext, { ChatContextProps } from "@/core/contexts/ChatContext";
-import { Message } from "@/core/types/ChatTypes";
 import { useCallback, useContext } from "react";
 
 const useChat = () => {

@@ -7,6 +7,7 @@ import {
   toDecodedReadableStream,
   transformSSEStream,
 } from "@/core/utils/stream";
+import { AssistantMessage } from "@/core/types/message";
 
 export const useChatUtils = () => {
   const abortController = useRef<AbortController | null>(null);
@@ -44,7 +45,7 @@ export const useChatUtils = () => {
         appendStreamChunk(chunk.toString());
       }
     } catch (err) {
-      console.log("The errror is", err);
+      updateLastMessage({ loading: false });
     }
   }, []);
 
@@ -71,7 +72,7 @@ export const useChatUtils = () => {
           signal: abortController.current.signal,
         }
       );
-      updateLastMessage({ loading: false });
+      updateLastMessage<AssistantMessage>({ loading: false, streaming: true });
       const reader = serverResp.data;
       const transformStream = toDecodedReadableStream(reader).pipeThrough(
         transformSSEStream()
@@ -81,7 +82,11 @@ export const useChatUtils = () => {
         appendStreamChunk(chunk.toString());
       }
     } catch (err) {
-      // Handle errors gracefully.
+      updateLastMessage<AssistantMessage>({
+        loading: false,
+        streaming: false,
+        error: true,
+      });
     }
   }, []);
 

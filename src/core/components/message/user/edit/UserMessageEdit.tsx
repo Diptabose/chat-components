@@ -32,7 +32,7 @@ const UserMessageEdit = ({
       />
       <div className="self-end flex items-center gap-2">
         <button
-          className="py-1 px-4 text-black cursor-pointer rounded-xl bg-slate-300"
+          className="py-1 px-4 text-black cursor-pointer rounded-xl bg-white border border-slate-200"
           onClick={() => {
             updateMessageAt<UserMessage>({ edit: false }, position!);
           }}

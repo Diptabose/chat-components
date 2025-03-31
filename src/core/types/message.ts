@@ -26,4 +26,6 @@ export interface UserMessage extends ChatMessage {
 
 export interface AssistantMessage extends ChatMessage {
   loading?: boolean;
+  streaming?: boolean;
+  error?: boolean;
 }

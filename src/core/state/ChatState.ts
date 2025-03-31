@@ -1,9 +1,11 @@
-import { ChatMessage } from "../types/message"
+import { ChatMessage } from "../types/message";
 
 export type ChatStateType = {
-  conversation: ChatMessage[]
-}
+  conversation: ChatMessage[];
+  streaming?: boolean;
+};
 
 export const ChatInitialState: ChatStateType = {
-  conversation: []
-}
+  conversation: [],
+  streaming: false,
+};

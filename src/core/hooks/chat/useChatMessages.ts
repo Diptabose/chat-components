@@ -70,21 +70,24 @@ const useChatMessages = () => {
     [conversation]
   );
 
-  const updateLastMessage = useCallback((message: Partial<ChatMessage>) => {
-    dispatch({
-      field: "conversation",
-      value: (prev) => {
-        // Append to the last message
-        const updatedMessages = [...prev];
-        const prevLength = prev.length - 1;
-        updatedMessages[prevLength] = {
-          ...updatedMessages[prevLength],
-          ...message,
-        };
-        return updatedMessages;
-      },
-    });
-  }, []);
+  const updateLastMessage = useCallback(
+    <T extends ChatMessage>(message: Partial<T>) => {
+      dispatch({
+        field: "conversation",
+        value: (prev) => {
+          // Append to the last message
+          const updatedMessages = [...prev];
+          const prevLength = prev.length - 1;
+          updatedMessages[prevLength] = {
+            ...updatedMessages[prevLength],
+            ...message,
+          };
+          return updatedMessages;
+        },
+      });
+    },
+    []
+  );
 
   const updateMessageAt = useCallback(
     <T extends ChatMessage>(message: Partial<T>, at: number) => {
@@ -112,6 +115,7 @@ const useChatMessages = () => {
     updateLastMessage,
     updateMessageAt,
     getMessageByIndex,
+    
   };
 };
 

@@ -2,7 +2,7 @@
 import ChatBody from "@/core/components/chat/body/ChatBody";
 import ChatFooter from "@/core/components/chat/footer/ChatFooter";
 import ChatHeader from "@/core/components/chat/header/ChatHeader";
-import { ChatInput } from "@/core/components/input/BaseInput";
+import { ChatInput } from "@/core/components/input/ChatInput";
 import ChatWindow from "@/core/components/window/ChatWindow";
 import { useChatUtils } from "@/core/hooks/chat/useChatUtils";
 import useChatInput from "@/core/hooks/chat/useChatInput";
@@ -40,11 +40,10 @@ export default function Home() {
           currentConversation={conversation}
           placement="sequential"
         />
-
         <ChatInput
           ref={inputRef}
           rootProps={{
-            className: "w-[50%] mx-auto my-2",
+            className: "w-[50%] mx-auto my-2 ",
           }}
           placeholder="Type a message"
           onHeightChange={scrollBottom}
