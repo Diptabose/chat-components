@@ -1,9 +1,9 @@
 import ChatContext, { ChatContextProps } from "@/core/contexts/ChatContext";
-import { Message } from "@/core/types/ChatTypes";
-import { useCallback, useContext } from "react";
+import { ChatStateType } from "@/core/state/ChatState";
+import { useContext } from "react";
 
 const useChat = () => {
-  const chatContext = useContext<ChatContextProps>(ChatContext);
+  const chatContext = useContext<ChatContextProps<ChatStateType>>(ChatContext);
 
   if (!chatContext) {
     throw new Error("useChat must be used within a ChatContext provider");

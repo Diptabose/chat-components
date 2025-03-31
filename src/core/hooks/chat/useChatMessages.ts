@@ -1,9 +1,10 @@
 import ChatContext, { ChatContextProps } from "@/core/contexts/ChatContext";
+import { ChatStateType } from "@/core/state/ChatState";
 import { ChatMessage, MessageType } from "@/core/types/message";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 
 const useChatMessages = () => {
-  const chatContext = useContext<ChatContextProps>(ChatContext);
+  const chatContext = useContext<ChatContextProps<ChatStateType>>(ChatContext);
 
   if (!chatContext) {
     throw new Error("useChat must be used within a ChatContext provider");
@@ -15,13 +16,13 @@ const useChatMessages = () => {
   } = chatContext;
 
   const addMessage = useCallback((message: ChatMessage) => {
-    dispatch({ field: "conversation", value: (prev) => [...prev, message] });
+    dispatch("conversation", (prev) => [...prev, message]);
   }, []);
 
   const appendStreamChunk = useCallback((chunk: string) => {
-    dispatch({
-      field: "conversation",
-      value: (prev) => {
+    dispatch(
+      "conversation",
+      (prev) => {
         // Append to the last message
         const updatedMessages = [...prev];
         const prevLength = prev.length - 1;
@@ -31,13 +32,13 @@ const useChatMessages = () => {
         };
         return updatedMessages;
       },
-    });
+    );
   }, []);
 
   const thinking = useCallback((think: boolean) => {
-    dispatch({
-      field: "conversation",
-      value: (prev) => {
+    dispatch(
+      "conversation",
+      (prev) => {
         // Append to the last message
         const updatedMessages = [...prev];
         const prevLength = prev.length - 1;
@@ -47,7 +48,7 @@ const useChatMessages = () => {
         };
         return updatedMessages;
       },
-    });
+    );
   }, []);
 
   const getLastMessage = useCallback(
@@ -71,9 +72,9 @@ const useChatMessages = () => {
   );
 
   const updateLastMessage = useCallback((message: Partial<ChatMessage>) => {
-    dispatch({
-      field: "conversation",
-      value: (prev) => {
+    dispatch(
+      "conversation",
+      (prev) => {
         // Append to the last message
         const updatedMessages = [...prev];
         const prevLength = prev.length - 1;
@@ -83,14 +84,14 @@ const useChatMessages = () => {
         };
         return updatedMessages;
       },
-    });
+    );
   }, []);
 
   const updateMessageAt = useCallback(
     <T extends ChatMessage>(message: Partial<T>, at: number) => {
-      dispatch({
-        field: "conversation",
-        value: (prev) => {
+      dispatch(
+        "conversation",
+        (prev) => {
           // Append to the last message
           const updatedMessages = [...prev];
           updatedMessages[at] = {
@@ -99,7 +100,7 @@ const useChatMessages = () => {
           };
           return updatedMessages;
         },
-      });
+      );
     },
     []
   );

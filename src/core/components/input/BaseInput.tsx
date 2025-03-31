@@ -70,7 +70,7 @@ export const ChatInput = ({
           }}
           {...textAreaProps}
           className={cn(
-            "outline-none w-full resize-none",
+            "outline-none w-full resize-none h-6",
             textAreaProps?.className
           )}
         />
