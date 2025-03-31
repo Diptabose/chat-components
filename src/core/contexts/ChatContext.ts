@@ -1,13 +1,13 @@
-import { Dispatch, RefObject, createContext } from "react";
+import { RefObject, createContext } from "react";
 import { ChatStateType } from "@/core/state/ChatState";
-import { ActionType } from "@/core/hooks/reducer/useCreateReducer";
+import { ActionStateType } from "@/core/hooks/reducer/useCreateReducer";
 
-export interface ChatContextProps {
-  state: ChatStateType;
-  dispatch: Dispatch<ActionType<ChatStateType>>;
+export interface ChatContextProps<T> {
+  state: T;
+  dispatch: ActionStateType<T>
   windowRef: RefObject<HTMLDivElement | null>;
   chatInputRef: RefObject<HTMLTextAreaElement | null>;
 }
 
-const ChatContext = createContext<ChatContextProps>(undefined!);
+const ChatContext = createContext<ChatContextProps<ChatStateType>>(undefined!);
 export default ChatContext;
