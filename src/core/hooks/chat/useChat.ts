@@ -1,6 +1,6 @@
 import ChatContext, { ChatContextProps } from "@/core/contexts/ChatContext";
 import { ChatStateType } from "@/core/state/ChatState";
-import { useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 
 const useChat = () => {
   const chatContext = useContext<ChatContextProps<ChatStateType>>(ChatContext);
@@ -10,10 +10,18 @@ const useChat = () => {
   }
 
   const {
-    state: { conversation },
+    state: { messages, streaming },
+    axiosClient,
+    dispatch,
   } = chatContext;
 
-  return { conversation };
+  const setStream = useCallback((stream: boolean) => {
+    dispatch("streaming", stream);
+  }, []);
+
+  const httpClient = useMemo(() => axiosClient, []);
+
+  return { messages, streaming, setStream, httpClient };
 };
 
 export default useChat;

@@ -11,70 +11,63 @@ const useChatMessages = () => {
   }
 
   const {
-    state: { conversation },
+    state: { messages },
     dispatch,
   } = chatContext;
 
   const addMessage = useCallback((message: ChatMessage) => {
-    dispatch("conversation", (prev) => [...prev, message]);
+    dispatch("messages", (prev) => [...prev, message]);
   }, []);
 
   const appendStreamChunk = useCallback((chunk: string) => {
-    dispatch(
-      "conversation",
-      (prev) => {
-        // Append to the last message
-        const updatedMessages = [...prev];
-        const prevLength = prev.length - 1;
-        updatedMessages[prevLength] = {
-          ...updatedMessages[prevLength],
-          text: updatedMessages[prevLength].text + chunk,
-        };
-        return updatedMessages;
-      },
-    );
+    dispatch("messages", (prev) => {
+      // Append to the last message
+      const updatedMessages = [...prev];
+      const prevLength = prev.length - 1;
+      updatedMessages[prevLength] = {
+        ...updatedMessages[prevLength],
+        text: updatedMessages[prevLength].text + chunk,
+      };
+      return updatedMessages;
+    });
   }, []);
 
   const thinking = useCallback((think: boolean) => {
-    dispatch(
-      "conversation",
-      (prev) => {
-        // Append to the last message
-        const updatedMessages = [...prev];
-        const prevLength = prev.length - 1;
-        updatedMessages[prevLength] = {
-          ...updatedMessages[prevLength],
-          loading: think,
-        };
-        return updatedMessages;
-      },
-    );
+    dispatch("messages", (prev) => {
+      // Append to the last message
+      const updatedMessages = [...prev];
+      const prevLength = prev.length - 1;
+      updatedMessages[prevLength] = {
+        ...updatedMessages[prevLength],
+        loading: think,
+      };
+      return updatedMessages;
+    });
   }, []);
 
   const getLastMessage = useCallback(
     (type: MessageType) => {
-      const conversationLength = conversation?.length;
+      const conversationLength = messages?.length;
       for (let i = conversationLength - 1; i >= 0; i--) {
-        const message = conversation[i];
+        const message = messages[i];
         if (message.type === type) {
           return message;
         }
       }
     },
-    [conversation]
+    [messages]
   );
 
   const getMessageByIndex = useCallback(
     (index: number, offset: number = 0) => {
-      return conversation[index - offset];
+      return messages[index - offset];
     },
-    [conversation]
+    [messages]
   );
 
-  const updateLastMessage = useCallback((message: Partial<ChatMessage>) => {
-    dispatch(
-      "conversation",
-      (prev) => {
+  const updateLastMessage = useCallback(
+    <T extends ChatMessage>(message: Partial<T>) => {
+      dispatch("messages", (prev) => {
         // Append to the last message
         const updatedMessages = [...prev];
         const prevLength = prev.length - 1;
@@ -83,24 +76,22 @@ const useChatMessages = () => {
           ...message,
         };
         return updatedMessages;
-      },
-    );
-  }, []);
+      });
+    },
+    []
+  );
 
   const updateMessageAt = useCallback(
     <T extends ChatMessage>(message: Partial<T>, at: number) => {
-      dispatch(
-        "conversation",
-        (prev) => {
-          // Append to the last message
-          const updatedMessages = [...prev];
-          updatedMessages[at] = {
-            ...updatedMessages[at],
-            ...message,
-          };
-          return updatedMessages;
-        },
-      );
+      dispatch("messages", (prev) => {
+        // Append to the last message
+        const updatedMessages = [...prev];
+        updatedMessages[at] = {
+          ...updatedMessages[at],
+          ...message,
+        };
+        return updatedMessages;
+      });
     },
     []
   );
@@ -113,7 +104,6 @@ const useChatMessages = () => {
     updateLastMessage,
     updateMessageAt,
     getMessageByIndex,
-    
   };
 };
 

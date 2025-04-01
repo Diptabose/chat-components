@@ -4,6 +4,7 @@ import { TbCopy, TbRefresh } from "react-icons/tb";
 import { useChatUtils } from "@/core/hooks/chat/useChatUtils";
 import { ChatMessage } from "@/core/types/message";
 import { copyText } from "@/core/utils/message";
+import useChat from "@/core/hooks/chat/useChat";
 
 interface AssistantMessageFooterProps {
   message: ChatMessage;
@@ -14,6 +15,7 @@ const AssistantMessageFooter = ({
   message,
   position,
 }: AssistantMessageFooterProps) => {
+  const { streaming } = useChat();
   const { getLastMessage } = useChatMessages();
   const { regenerateAssistantStream } = useChatUtils();
 

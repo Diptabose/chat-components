@@ -1,25 +1,48 @@
 "use client";
-import React, { PropsWithChildren, useRef } from "react";
+import React, { PropsWithChildren, ReactNode, useRef } from "react";
 import ChatContext from "../contexts/ChatContext";
 import useCreateReducer from "../hooks/reducer/useCreateReducer";
-import { ChatInitialState, ChatStateType } from "../state/ChatState";
+import { ChatInitialState } from "../state/ChatState";
+import { AxiosInstance } from "axios";
 import { ChatMessage } from "../types/message";
 
-const ChatProvider = (props: PropsWithChildren) => {
+interface ChatProviderProps {
+  config: {
+    UserMessage?: ReactNode;
+    AssistantMessage?: ReactNode;
+    axiosClient: AxiosInstance;
+  };
+  messages: ChatMessage[];
+}
+
+const ChatProvider = ({
+  children,
+  config,
+  messages,
+}: PropsWithChildren & ChatProviderProps) => {
   const chatContext = useCreateReducer({
-    initialState: ChatInitialState,
+    initialState: {
+      ...ChatInitialState,
+      messages,
+    },
   });
 
-  chatContext.dispatch({field:'conversation', value:(prev)=>{
-    return prev
-  }})
-
+  const { AssistantMessage, UserMessage, axiosClient } = config;
   const windowRef = useRef<HTMLDivElement | null>(null);
   const chatInputRef = useRef<HTMLTextAreaElement | null>(null);
 
   return (
-    <ChatContext.Provider value={{ ...chatContext, windowRef, chatInputRef }}>
-      {props.children}
+    <ChatContext.Provider
+      value={{
+        ...chatContext,
+        windowRef,
+        chatInputRef,
+        UserMessage,
+        AssistantMessage,
+        axiosClient,
+      }}
+    >
+      {children}
     </ChatContext.Provider>
   );
 };

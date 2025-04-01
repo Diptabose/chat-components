@@ -1,4 +1,5 @@
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useRef } from "react";
+import useChat from "./useChat";
 
 interface ChatScrollConfig {
   autoScroll: boolean;
@@ -9,6 +10,8 @@ const useChatScroll = <T extends HTMLElement>(
   config: ChatScrollConfig,
   deps: unknown[]
 ) => {
+  const allowScroll = useRef(true);
+  const { streaming } = useChat();
   const scrollBottom = () => {
     if (config.autoScroll) {
       ref?.current?.scrollTo({
@@ -19,9 +22,36 @@ const useChatScroll = <T extends HTMLElement>(
   };
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      scrollBottom();
-    }, 0);
+    function handleScrollUp(e: any) {
+      console.log(e);
+      if (ref?.current) {
+        const scrollAtBottom = Math.abs(
+          ref?.current?.scrollHeight -
+            ref?.current?.clientHeight -
+            ref?.current?.scrollTop
+        );
+
+        if (scrollAtBottom >= 100 && streaming) {
+          allowScroll.current = false;
+        }
+        if (scrollAtBottom <= 1 && streaming) {
+          allowScroll.current = true;
+        }
+      }
+    }
+    ref?.current?.addEventListener("scroll", handleScrollUp);
+    return () => {
+      ref?.current?.removeEventListener("scroll", handleScrollUp);
+    };
+  }, [...deps, streaming]);
+
+  useEffect(() => {
+    let timerId: NodeJS.Timeout;
+    if (allowScroll.current === true) {
+      timerId = setTimeout(() => {
+        scrollBottom();
+      }, 10);
+    }
     return () => {
       clearTimeout(timerId);
     };

@@ -28,7 +28,7 @@ const ChatWindow = <T extends ChatMessage>({
     >
       <div className="w-[50%] mx-auto">
         <div className="flex flex-col gap-2">
-          {currentConversation.map((message, index) => {
+          {currentConversation?.map((message, index) => {
             return (
               <MessageRenderer message={message} position={index} key={index} />
             );
