@@ -5,7 +5,7 @@ import Chat from "./chat";
 import { ChatMessage } from "@/core/types/message";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: "http://localhost:3003",
 });
 
 export default function Home() {

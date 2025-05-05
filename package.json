@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@diptabose/chat-client": "^1.0.2",
     "axios": "^1.8.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

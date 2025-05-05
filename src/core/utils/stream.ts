@@ -40,8 +40,8 @@ export function transformSSEStream() {
   });
 }
 
-export async function* readableStreamToAsyncIterable(
-  reader: ReadableStream<string>
+export async function* readableStreamToAsyncIterable<T>(
+  reader: ReadableStream<any>
 ) {
   const readerInstance = reader.getReader();
   while (true) {
@@ -49,6 +49,6 @@ export async function* readableStreamToAsyncIterable(
     if (done) {
       break;
     }
-    yield value;
+    yield value as T;
   }
 }

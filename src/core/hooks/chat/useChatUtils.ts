@@ -7,6 +7,9 @@ import {
 } from "@/core/utils/stream";
 import { AssistantMessage } from "@/core/types/message";
 import useChat from "./useChat";
+import { Client } from "@diptabose/chat-client/client/client.js";
+import { SSETransport } from "@diptabose/chat-client/transports/sse/sse.js";
+import { StreambleHttpTransport } from "@diptabose/chat-client/transports/streamableHttp/streamableHttp.js";
 
 export const useChatUtils = () => {
   const { httpClient, setStream } = useChat();
@@ -25,31 +28,49 @@ export const useChatUtils = () => {
       }
       addMessage({ text: "", type: "assistant", loading: true });
       try {
-        const serverResp = await httpClient.post(
-          "/stream",
+        // const serverResp = await httpClient.post(
+        //   "/stream",
+        //   {
+        //     query,
+        //     ...body,
+        //   },
+        //   {
+        //     headers: {
+        //       Accept: "text/event-stream",
+        //       ...headers,
+        //     },
+        //     responseType: "stream",
+        //     adapter: "fetch",
+        //     signal: abortController.current.signal,
+        //   }
+        // );
+
+        const client = new Client(
+          new StreambleHttpTransport("http://localhost:5000/stream"),
+          {
+            objectMode: true,
+            stream: true,
+          }
+        );
+
+        const { readableStream } = await client.send(
+          "http://localhost:5000/stream",
           {
             query,
             ...body,
-          },
-          {
-            headers: {
-              Accept: "text/event-stream",
-              ...headers,
-            },
-            responseType: "stream",
-            adapter: "fetch",
-            signal: abortController.current.signal,
           }
         );
         updateLastMessage({ loading: false });
         setStream(true);
-        const reader = serverResp.data;
-        const transformStream = toDecodedReadableStream(reader).pipeThrough(
-          transformSSEStream()
-        );
-        const responseIterable = readableStreamToAsyncIterable(transformStream);
+        // const reader = serverResp.data;
+        // const transformStream = toDecodedReadableStream(reader).pipeThrough(
+        //   transformSSEStream()
+        // );
+        const responseIterable = readableStreamToAsyncIterable<{
+          data: unknown;
+        }>(readableStream);
         for await (let chunk of responseIterable) {
-          appendStreamChunk(chunk.toString());
+          appendStreamChunk(chunk.data as string);
         }
       } catch (err) {
         updateLastMessage({ loading: false });
@@ -96,7 +117,8 @@ export const useChatUtils = () => {
         const transformStream = toDecodedReadableStream(reader).pipeThrough(
           transformSSEStream()
         );
-        const responseIterable = readableStreamToAsyncIterable(transformStream);
+        const responseIterable =
+          readableStreamToAsyncIterable<string>(transformStream);
         for await (let chunk of responseIterable) {
           appendStreamChunk(chunk.toString());
         }

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:3003",
 });
 
 export default function RootLayout({
