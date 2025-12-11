@@ -18,20 +18,18 @@ const messageComponents = Object.freeze({
 
 interface MessageRendererProps {
   message: ChatMessage;
-  position: number;
 }
 
-const MessageRenderer = ({ message, position }: MessageRendererProps) => {
+const MessageRenderer = ({ message }: MessageRendererProps) => {
   const MessageComponent = messageComponents[message.type]?.component;
   const FooterComponent = messageComponents[message.type]?.footer;
   return (
     <MessageComponent
       {...message}
-      position={position}
-      key={position}
+      key={message.id}
       footer={
         FooterComponent ? (
-          <FooterComponent message={message} position={position} />
+          <FooterComponent message={message} />
         ) : null
       }
     />

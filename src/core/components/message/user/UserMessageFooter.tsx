@@ -5,17 +5,21 @@ import { copyText } from "@/core/utils/message";
 
 interface MessageFooterProps {
   message: UserMessage;
-  position: number;
 }
 
-const UserMessageFooter = ({ message, position }: MessageFooterProps) => {
-  const { updateMessageAt } = useChatMessages();
+const UserMessageFooter = ({ message }: MessageFooterProps) => {
+  const { updateMessageAtId } = useChatMessages();
 
   return (
     <div className="flex items-center gap-2">
       <button className="rounded-lg hover:bg-gray-50 cursor-pointer text-[#5d5d5d]">
         <span className="flex items-center justify-center size-8">
-          <TbCopy className="size-6" onClick={()=>{copyText(message?.text)}}/>
+          <TbCopy
+            className="size-6"
+            onClick={() => {
+              copyText(message?.text);
+            }}
+          />
         </span>
       </button>
       <button className="rounded-lg hover:bg-gray-50 cursor-pointer text-[#5d5d5d]">
@@ -23,7 +27,7 @@ const UserMessageFooter = ({ message, position }: MessageFooterProps) => {
           <TbPencilUp
             className="size-6"
             onClick={() => {
-              updateMessageAt<UserMessage>({ edit: true }, position);
+              updateMessageAtId<UserMessage>({ edit: true }, message.id);
             }}
           />
         </span>

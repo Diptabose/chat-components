@@ -7,7 +7,9 @@ const useChatMessages = () => {
   const chatContext = useContext<ChatContextProps<ChatStateType>>(ChatContext);
 
   if (!chatContext) {
-    throw new Error("useChat must be used within a ChatContext provider");
+    throw new Error(
+      "useChatMessages must be used within a ChatContext provider"
+    );
   }
 
   const {
@@ -81,15 +83,17 @@ const useChatMessages = () => {
     []
   );
 
-  const updateMessageAt = useCallback(
-    <T extends ChatMessage>(message: Partial<T>, at: number) => {
+  const updateMessageAtId = useCallback(
+    <T extends ChatMessage>(message: Partial<T>, id: string) => {
       dispatch("messages", (prev) => {
-        // Append to the last message
         const updatedMessages = [...prev];
-        updatedMessages[at] = {
-          ...updatedMessages[at],
-          ...message,
-        };
+        const at = updatedMessages.findIndex((message) => message.id === id);
+        if (at) {
+          updatedMessages[at] = {
+            ...updatedMessages[at],
+            ...message,
+          };
+        }
         return updatedMessages;
       });
     },
@@ -102,7 +106,7 @@ const useChatMessages = () => {
     thinking,
     getLastMessage,
     updateLastMessage,
-    updateMessageAt,
+    updateMessageAtId,
     getMessageByIndex,
   };
 };

@@ -1,23 +1,21 @@
 import useChatMessages from "@/core/hooks/chat/useChatMessages";
 import { LuThumbsUp, LuThumbsDown } from "react-icons/lu";
 import { TbCopy, TbRefresh } from "react-icons/tb";
-import { useChatUtils } from "@/core/hooks/chat/useChatUtils";
 import { ChatMessage } from "@/core/types/message";
 import { copyText } from "@/core/utils/message";
 import useChat from "@/core/hooks/chat/useChat";
+import { useChatStreamUtils } from "@/core/hooks/chat/useChatStreamUtils";
 
 interface AssistantMessageFooterProps {
   message: ChatMessage;
-  position: number;
 }
 
 const AssistantMessageFooter = ({
   message,
-  position,
 }: AssistantMessageFooterProps) => {
   const { streaming } = useChat();
   const { getLastMessage } = useChatMessages();
-  const { regenerateAssistantStream } = useChatUtils();
+  const { regenerateAssistantStream } = useChatStreamUtils();
 
   return (
     <div className="flex items-center gap-2">

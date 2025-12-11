@@ -12,7 +12,7 @@ interface ChatInputProps extends BaseChatInputProps<HTMLTextAreaElement> {
   textAreaWrapperProps?: HTMLAttributes<HTMLDivElement>;
   sendIcon?: ReactNode;
   extensions?: ReactNode[];
-  onSend?: (message: ChatMessage) => Promise<void>;
+  onSend?: (message: {text:string}) => Promise<void>;
 }
 
 export const ChatInput = ({
@@ -29,7 +29,6 @@ export const ChatInput = ({
     if (chatText.trim().length > 0) {
       onSend?.({
         text: chatText,
-        type: "user",
       });
       setText("");
     }

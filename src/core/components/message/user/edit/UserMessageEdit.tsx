@@ -1,21 +1,21 @@
 import BaseChatInput from "@/core/components/input/BaseInput";
 import useChatMessages from "@/core/hooks/chat/useChatMessages";
-import { useChatUtils } from "@/core/hooks/chat/useChatUtils";
+import { useChatStreamUtils } from "@/core/hooks/chat/useChatStreamUtils";
 import { UserMessage } from "@/core/types/message";
 import { cn } from "@/core/utils/cn";
-import React, { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useState } from "react";
 
 interface UserMessageEditProps {
-  position: number;
+  id: string;
   textAreaWrapperProps?: HTMLAttributes<HTMLDivElement>;
 }
 
 const UserMessageEdit = ({
-  position,
+  id,
   textAreaWrapperProps,
 }: UserMessageEditProps) => {
-  const { updateMessageAt } = useChatMessages();
-  const { regenerateAssistantStream } = useChatUtils();
+  const { updateMessageAtId } = useChatMessages();
+  const { regenerateAssistantStream } = useChatStreamUtils();
 
   const [editedMessage, setEditedMessage] = useState<string>("");
 
@@ -34,7 +34,7 @@ const UserMessageEdit = ({
         <button
           className="py-1 px-4 text-black cursor-pointer rounded-xl bg-white border border-slate-200"
           onClick={() => {
-            updateMessageAt<UserMessage>({ edit: false }, position!);
+            updateMessageAtId<UserMessage>({ edit: false }, id);
           }}
         >
           Cancel
@@ -43,9 +43,9 @@ const UserMessageEdit = ({
           className="py-1 px-4 text-white cursor-pointer rounded-xl bg-black"
           onClick={async () => {
             if (editedMessage?.trim().length > 0) {
-              updateMessageAt<UserMessage>(
+              updateMessageAtId<UserMessage>(
                 { text: editedMessage, edit: false },
-                position!
+                id
               );
               await regenerateAssistantStream(editedMessage);
             }

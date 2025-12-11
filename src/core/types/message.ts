@@ -9,13 +9,13 @@ export interface Attachment {
 }
 
 export type ChatMessage = {
+  id: string;
   icon?: ReactNode;
   text: string;
   attachments?: Attachment[];
   footer?: ReactNode;
   loading?: boolean;
   type: MessageType;
-  readonly position?: number; // Typically this should be a unique id
 };
 
 export interface UserMessage extends ChatMessage {
