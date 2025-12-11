@@ -20,7 +20,7 @@ const UserMessageEdit = ({
   const [editedMessage, setEditedMessage] = useState<string>("");
 
   return (
-    <div className="flex flex-col p-2 border-2 border-red-50 w-full gap-2">
+    <div className="flex flex-col p-2 w-full gap-2">
       <BaseChatInput
         maxRows={5}
         placeholder="Edit here"

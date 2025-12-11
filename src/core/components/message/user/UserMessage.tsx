@@ -10,7 +10,7 @@ const UserMessage = ({
   footer,
   attachments,
   edit,
-  position,
+  id
 }: UserMessage) => {
   return (
     <div className="flex gap-4 p-2 items-center shadow-md rounded-3xl bg-[hsla(0,0%,91%,0.5)] group/message">
@@ -18,7 +18,7 @@ const UserMessage = ({
         {icon ?? <FaUser size={16} />}
       </div>
       {edit ? (
-        <UserMessageEdit position={position!} />
+        <UserMessageEdit id={id} />
       ) : (
         <div
           className="flex flex-col gap-2 w-full"

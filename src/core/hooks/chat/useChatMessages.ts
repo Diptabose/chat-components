@@ -86,9 +86,9 @@ const useChatMessages = () => {
   const updateMessageAtId = useCallback(
     <T extends ChatMessage>(message: Partial<T>, id: string) => {
       dispatch("messages", (prev) => {
-        const updatedMessages = [...prev];
+        let updatedMessages = [...prev];
         const at = updatedMessages.findIndex((message) => message.id === id);
-        if (at) {
+        if (at !== -1) {
           updatedMessages[at] = {
             ...updatedMessages[at],
             ...message,
